@@ -1,0 +1,124 @@
+# Add the Elastic GPG Key
+curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+
+# Add the 7.x Repository
+echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/7.x/apt stable main" | tee /etc/apt/sources.list.d/elastic-7.x.list
+
+# Install and Start
+apt update
+apt install -y elasticsearch
+systemctl enable elasticsearch
+systemctl start elasticsearch
+
+
+#Verify ES running
+
+curl -X GET "localhost:9200/"
+
+
+
+Step 1: Install Elasticsearch 8
+Run these as root. We will remove version 7 first to avoid port conflicts.
+
+Bash
+
+# Remove ES7
+apt remove -y elasticsearch
+rm -rf /etc/apt/sources.list.d/elastic-7.x.list
+
+# Add ES8 Repo
+curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | tee /etc/apt/sources.list.d/elastic-8.x.list
+
+# Install ES8
+apt update && apt install -y elasticsearch
+
+# Disable security for the assessment (to make connection easier)
+sed -i 's/xpack.security.enabled: true/xpack.security.enabled: false/' /etc/elasticsearch/elasticsearch.yml
+
+# Start
+systemctl enable elasticsearch
+systemctl start elasticsearch
+
+
+
+1. Install Elasticsearch 8
+Run these commands to add the new repository and install the software:
+
+Bash
+
+# Add the Elasticsearch 8 GPG Key
+curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+
+# Add the 8.x Repository
+echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | tee /etc/apt/sources.list.d/elastic-8.x.list
+
+# Install
+apt update && apt install -y elasticsearch
+
+# IMPORTANT: Disable security for the assessment to avoid SSL/Auth issues with Magento
+sed -i 's/xpack.security.enabled: true/xpack.security.enabled: false/' /etc/elasticsearch/elasticsearch.yml
+
+# Start and enable
+systemctl daemon-reload
+systemctl enable elasticsearch
+systemctl start elasticsearch
+
+
+
+Since your server has 8GB of RAM, we have more breathing room, but Elasticsearch is still very aggressive with memory. The reason it failed to start is likely because the "out of the box" configuration tried to claim more than the system could spare alongside PHP and MySQL.
+
+Let's adjust the settings to be more generous than before, but still safe for an 8GB system.
+
+Step 1: Set Memory to 2GB
+For an 8GB server running Magento, 2GB for Elasticsearch is the "sweet spot."
+
+Run these as root:
+
+Bash
+
+# Create the memory config file
+echo "-Xms2g" > /etc/elasticsearch/jvm.options.d/memory.options
+echo "-Xmx2g" >> /etc/elasticsearch/jvm.options.d/memory.options
+Step 2: Finalize the Config & Start
+Let's ensure the configuration file has the necessary "Single Node" and "Security Disabled" flags so it doesn't fail on boot.
+
+Bash
+
+# Add essential flags to the end of the config
+echo "discovery.type: single-node" >> /etc/elasticsearch/elasticsearch.yml
+echo "xpack.security.enabled: false" >> /etc/elasticsearch/elasticsearch.yml
+
+# Reload and Start
+systemctl daemon-reload
+systemctl start elasticsearch
+
+# Verify it is running
+systemctl status elasticsearch
+Step 3: Complete Magento Installation
+Once you see active (running), switch back to your test-ssh user and run the installation. I have updated the search engine to elasticsearch8 to match your new version.
+
+Bash
+
+su - test-ssh
+cd /var/www/html/magento
+
+# Run the installer
+bin/magento setup:install \
+--base-url="https://test.mgt.com/" \
+--db-host="localhost" \
+--db-name="magento_db" \
+--db-user="magento_user" \
+--db-password='Mag3nto_Pass!123' \
+--admin-firstname="Admin" \
+--admin-lastname="User" \
+--admin-email="admin@test.mgt.com" \
+--admin-user="admin" \
+--admin-password='AdminPassword123!' \
+--language="en_US" \
+--currency="USD" \
+--timezone="UTC" \
+--use-rewrites=1 \
+--search-engine=elasticsearch8 \
+--elasticsearch-host=localhost \
+--elasticsearch-port=9200

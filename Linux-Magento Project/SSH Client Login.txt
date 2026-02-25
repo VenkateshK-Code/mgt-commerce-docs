@@ -1,0 +1,1 @@
+ssh -i "C:\Users\venka\OneDrive\Desktop\Linux-Magento Project\mgt-key.pem" admin@13.60.227.121

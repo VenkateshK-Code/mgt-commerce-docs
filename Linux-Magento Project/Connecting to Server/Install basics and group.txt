@@ -1,0 +1,13 @@
+# Switch to root
+sudo su -
+
+# Update system
+apt update && apt upgrade -y
+
+# Install tools
+apt install -y curl wget gnupg2 lsb-release ca-certificates unzip git software-properties-common libnss3-tools vim
+
+# Create Group and User
+groupadd clp
+useradd -m -g clp -s /bin/bash test-ssh
+passwd test-ssh

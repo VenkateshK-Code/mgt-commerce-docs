@@ -1,0 +1,26 @@
+[test-ssh]
+; Use the specific user and group required by the assessment
+user = test-ssh
+group = clp
+
+; Define the unique socket for this pool to be used by NGINX
+listen = /run/php/php8.3-fpm-test-ssh.sock
+
+; Set socket permissions to allow NGINX (running as test-ssh) to connect
+listen.owner = test-ssh
+listen.group = clp
+listen.mode = 0660
+
+; Performance settings optimized for Magento 2
+pm = dynamic
+pm.max_children = 50
+pm.start_servers = 5
+pm.min_spare_servers = 5
+pm.max_spare_servers = 35
+
+; Required PHP settings for Magento 2 operation
+php_admin_value[memory_limit] = 2G
+php_admin_value[max_execution_time] = 1800
+php_admin_flag[zlib.output_compression] = on
+php_admin_flag[display_errors] = off
+php_admin_value[date.timezone] = UTC

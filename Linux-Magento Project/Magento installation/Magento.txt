@@ -1,0 +1,74 @@
+1. Switch to the Magento User
+As per the assessment requirements, the files must be owned by test-ssh. We will now switch to that user and move to the web directory.
+
+Bash
+
+# Switch from root to the test-ssh user
+su - test-ssh
+
+# Navigate to the Magento directory we prepared earlier
+cd /var/www/html/magento
+
+
+The "No such file or directory" error indicates that the directory /var/www/html/magento was never created, or was created with a typo. Since you are currently logged in as test-ssh, you do not have permission to create folders inside /var/www/html.
+
+You need to exit back to the root user to create the directory and set the correct permissions.
+
+1. Create the Directory as Root
+Run these commands exactly:
+
+Bash
+
+# Exit back to root
+exit
+
+# Create the directory path
+mkdir -p /var/www/html/magento
+
+# Set the ownership to the user and group required by the assessment
+chown -R test-ssh:clp /var/www/html/magento
+
+# Set permissions so the user can write to it
+chmod 775 /var/www/html/magento
+2. Switch Back and Verify
+Now that the folder exists and is owned by test-ssh, switch back and try again:
+
+Bash
+
+su - test-ssh
+cd /var/www/html/magento
+ls -la
+3. Start the Magento Download
+If the ls -la command now shows an empty directory without errors, you are ready to start the download. You will need your Adobe/Magento Marketplace Public and Private keys now.
+
+Bash
+
+composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition .
+
+
+Start installation by following command
+
+
+# Switch back to the Magento user
+su - test-ssh
+cd /var/www/html/magento
+
+# Run the installer
+bin/magento setup:install \
+--base-url="http://13.60.13.214/" \
+--db-host="localhost" \
+--db-name="magento_db" \
+--db-user="magento_user" \
+--db-password='Mag3nto_Pass!123' \
+--admin-firstname="Admin" \
+--admin-lastname="User" \
+--admin-email="admin@test.mgt.com" \
+--admin-user="admin" \
+--admin-password='AdminPassword123!' \
+--language="en_US" \
+--currency="USD" \
+--timezone="UTC" \
+--use-rewrites=1 \
+--search-engine=elasticsearch7 \
+--elasticsearch-host=localhost \
+--elasticsearch-port=9200

@@ -1,0 +1,805 @@
+admin@ip-172-31-32-171:~$ history
+    1  sudo apt update && sudo apt upgrade -y
+    2  sudo apt install -y curl wget gnupg2 lsb-release ca-certificates apt-transport-https
+    3  sudo apt install -y nginx
+    4  sudo systemctl enable nginx
+    5  sudo systemctl start nginx
+    6  sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+    7  echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+    8  sudo apt update
+    9  sudo apt install -y php8.3-fpm php8.3-common php8.3-mysql php8.3-gmp php8.3-curl php8.3-intl php8.3-mbstring php8.3-xmlrpc php8.3-gd php8.3-xml php8.3-cli php8.3-zip php8.3-bcmath php8.3-soap php8.3-intl php8.3-readline php8.3-sockets
+   10  wget https://dev.mysql.com/get/mysql-apt-config_0.8.29-1_all.deb
+   11  sudo dpkg -i mysql-apt-config_0.8.29-1_all.deb
+   12  sudo apt update
+   13  sudo apt install -y mysql-server
+   14  sudo mysql_secure_installation
+   15  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B7B3B788A8D3785C
+   16  sudo apt update
+   17  sudo apt install -y mysql-server
+   18  wget https://dev.mysql.com/get/mysql-apt-config_0.8.32-1_all.deb
+   19  dpkg -i mysql-apt-config_0.8.32-1_all.deb
+   20  apt install -y gnupg
+   21  apt install -y nginx mariadb-server redis-server
+   22  groupadd clp
+   23  useradd -m -g clp -s /bin/bash test-ssh
+   24  sudo groupadd clp
+   25  sudo useradd -m -g clp -s /bin/bash test-ssh
+   26  sudo passwd test-ssh
+   27  sudo apt update && sudo apt upgrade -y
+   28  sudo apt install -y software-properties-common curl wget git unzip
+   29  sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+   30  echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+   31  sudo apt update
+   32  sudo apt install -y php8.3-fpm php8.3-common php8.3-mysql php8.3-gmp php8.3-curl php8.3-intl php8.3-mbstring php8.3-xmlrpc php8.3-gd php8.3-xml php8.3-cli php8.3-zip php8.3-bcmath php8.3-soap php8.3-intl php8.3-redis
+   33  sudo apt install -y default-mysql-server
+   34  sudo mysql_secure_installation
+   35  CREATE DATABASE magento;
+   36  CREATE USER 'magento_user'@'localhost' IDENTIFIED BY 'YourStrongPassword';
+   37  GRANT ALL PRIVILEGES ON magento.* TO 'magento_user'@'localhost';
+   38  FLUSH PRIVILEGES;
+   39  EXIT;
+   40  sudo mysql
+   41  wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+   42  echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
+   43  sudo apt update && sudo apt install elasticsearch
+   44  sudo systemctl enable --now elasticsearch
+   45  sudo gpg --keyserver hkps://keyserver.ubuntu.com --recv-keys B7B3B788A8D3785C
+   46  sudo gpg --export B7B3B788A8D3785C | sudo tee /usr/share/keyrings/mysql-archive-keyring.gpg > /dev/null
+   47  sudo apt update
+   48  wget https://dev.mysql.com/get/mysql-apt-config_0.8.32-1_all.deb
+   49  sudo dpkg -i mysql-apt-config_0.8.32-1_all.deb
+   50  sudo apt update
+   51  sudo apt install mysql-server
+   52  sudo apt --fix-broken install
+   53  sudo apt install -y elasticsearch
+   54  sudo systemctl daemon-reload
+   55  sudo systemctl enable elasticsearch
+   56  sudo systemctl start elasticsearch
+   57  sudo systemctl status mysql
+   58  curl -X GET "localhost:9200/"
+   59  sudo nano /etc/nginx/sites-available/magento
+   60  sudo ln -s /etc/nginx/sites-available/magento /etc/nginx/sites-enabled/
+   61  sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/magento-selfsigned.key -out /etc/ssl/certs/magento-selfsigned.crt
+   62  sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/magento-selfsigned.key -out /etc/ssl/certs/magento-selfsigned.crt
+   63  sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/magento-selfsigned.key -out /etc/ssl/certs/magento-selfsigned.crt
+   64  sudo su - test-ssh
+   65  sudo sed -i 's/user www-data;/user test-ssh;/' /etc/nginx/nginx.conf
+   66  sudo nano /etc/nginx/sites-available/pma
+   67  sudo ln -s /etc/nginx/sites-available/pma /etc/nginx/sites-enabled/
+   68  sudo chown -R test-ssh:clp /home/test-ssh/magento2
+   69  sudo chown -R test-ssh:clp /home/test-ssh/phpmyadmin
+   70  sudo su - test-ssh
+   71  ps aux | grep nginx
+   72  sudo nano /etc/nginx/nginx.conf
+   73  sudo nginx -t
+   74  sudo systemctl restart nginx
+   75  ps aux | grep nginx
+   76  sudo systemctl edit varnish.service
+   77  sudo nano /etc/default/varnish
+   78  sudo systemctl edit --full varnish.service
+   79  dpkg -l | grep varnish
+   80  sudo systemctl list-unit-files | grep varnish
+   81  sudo apt update
+   82  sudo apt install -y varnish
+   83  sudo systemctl enable varnish
+   84  sudo systemctl start varnish
+   85  sudo systemctl list-unit-files | grep varnish
+   86  sudo nano /lib/systemd/system/varnish.service
+   87  sudo systemctl edit varnish.service
+   88  sudo nano /etc/varnish/default.vcl
+   89  sudo nano /etc/nginx/sites-available/magento
+   90  sudo systemctl edit varnish.service
+   91  sudo nano /etc/nginx/sites-available/magento
+   92  sudo systemctl daemon-reload
+   93  sudo systemctl restart varnish
+   94  sudo systemctl restart nginx
+   95  sudo ss -tulpn | grep -E '80|8080|443'
+   96  sudo nano /etc/nginx/sites-available/magento
+   97  sudo systemctl edit varnish.service
+   98  sudo systemctl daemon-reload
+   99  sudo systemctl restart varnish
+  100  sudo ss -tulpn | grep -E '80|8080|443'
+  101  sudo rm /etc/nginx/sites-enabled/default
+  102  sudo systemctl restart nginx
+  103  sudo systemctl restart varnish
+  104  sudo ss -tulpn | grep -E '80|8080|443'
+  105  sudo nano /etc/nginx/sites-available/magento
+  106  sudo systemctl daemon-reload
+  107  sudo systemctl restart nginx
+  108  sudo systemctl restart varnish
+  109  sudo ss -tulpn | grep -E '80|8080|443'
+  110  grep -r "listen 80" /etc/nginx/sites-enabled/
+  111  sudo systemctl restart nginx
+  112  sudo systemctl restart varnish
+  113  sudo journalctl -u varnish -n 20
+  114  grep -r "listen 80" /etc/nginx/sites-enabled/
+  115  sudo lsof -i :80
+  116  grep "listen 80" /etc/nginx/nginx.conf
+  117  sudo systemctl stop nginx
+  118  sudo rm /etc/nginx/sites-enabled/default
+  119  sudo lsof -i :80
+  120  sudo systemctl start varnish
+  121  sudo ss -tulpn | grep :80
+  122  sudo systemctl start nginx
+  123  sudo nginx -t
+  124  sudo systemctl start nginx
+  125  sudo ss -tulpn | grep -E '80|8080|443'
+  126  sudo journalctl -xeu nginx.service | grep "bind"
+  127  sudo chown -R test-ssh:adm /var/log/nginx
+  128  sudo chmod -R 755 /var/log/nginx
+  129  sudo lsof -i :8080
+  130  sudo lsof -i :443
+  131  sudo systemctl start nginx
+  132  sudo grep -r "listen 80" /etc/nginx/
+  133  sudo nano /etc/nginx/sites-available/pma
+  134  sudo rm /etc/nginx/sites-enabled/default
+  135  ls -l /etc/nginx/sites-enabled/
+  136  sudo systemctl stop nginx
+  137  sudo systemctl restart varnish
+  138  sudo systemctl start nginx
+  139  sudo ss -tulpn | grep -E '80|8080|443'
+  140  sudo chown -R test-ssh:clp /home/test-ssh/magento2 /home/test-ssh/phpmyadmin
+  141  sudo -su test-ssh
+  142  sudo nano /etc/varnish/default.vcl
+  143  curl -I -H "Host: test.mgt.com" http://127.0.0.1:8080/
+  144  ls -l /run/php/php8.3-fpm-test-ssh.sock
+  145  sudo nano /etc/php/8.3/fpm/pool.d/test-ssh.conf
+  146  sudo systemctl restart php8.3-fpm
+  147  sudo php-fpm8.3 -t
+  148  sudo nano /etc/php/8.3/fpm/pool.d/test-ssh.conf
+  149  sudo systemctl restart php8.3-fpm
+  150  ls -l /run/php/php8.3-fpm-test-ssh.sock
+  151  curl -I -H "Host: test.mgt.com" http://127.0.0.1:8080/
+  152  curl -I -H "Host: pma.mgt.com" http://127.0.0.1:8080/
+  153  curl -I -k -H "Host: test.mgt.com" https://localhost/
+  154  curl -I -H "Host: pma.mgt.com" http://127.0.0.1:8080/
+  155  sudo chown -R test-ssh:clp /home/test-ssh/magento2 /home/test-ssh/phpmyadmin
+  156  sudo chown -R test-ssh:adm /var/log/nginx
+  157  redis-cli -n 2 keys "*"
+  158  sudo apt update
+  159  sudo apt install redis-tools -y
+  160  redis-cli -n 2 keys "*"
+  161  sudo systemctl status redis-server
+  162  sudo systemctl start redis-server
+  163  sudo apt update
+  164  sudo apt install redis-server -y
+  165  sudo systemctl start redis-server
+  166  sudo systemctl enable redis-server
+  167  sudo nano /etc/redis/redis.conf
+  168  sudo systemctl restart redis-server
+  169  sudo systemctl status redis-server
+  170  redis-cli -n 2 keys "*"
+  171  curl -X GET "localhost:9200/_cluster/health?pretty"
+  172  sudo chown -R test-ssh:clp /home/test-ssh/magento2
+  173  sudo find /home/test-ssh/magento2 -type d -exec chmod 755 {} +
+  174  sudo find /home/test-ssh/magento2 -type f -exec chmod 644 {} +
+  175  curl -X GET "localhost:9200/_cluster/health?pretty"
+  176  sudo chown -R test-ssh:clp /home/test-ssh/magento2 /home/test-ssh/phpmyadmin
+  177  sudo su- test-ssh
+  178  sudo -su test-ssh
+  179  sudo mariadb -u root
+  180  sudo -su test-ssh
+  181  wget https://dev.mysql.com/get/mysql-apt-config_0.8.29-1_all.deb
+  182  sudo dpkg -i mysql-apt-config_0.8.29-1_all.deb
+  183  sudo apt update
+  184  sudo apt install mysql-server -y
+  185  sudo gpg --keyserver keyserver.ubuntu.com --recv-keys B7B3B788A8D3785C
+  186  sudo gpg --export B7B3B788A8D3785C | sudo tee /usr/share/keyrings/mysql-archive-keyring.gpg > /dev/null
+  187  echo "deb [signed-by=/usr/share/keyrings/mysql-archive-keyring.gpg] http://repo.mysql.com/apt/debian/ bookworm mysql-8.0" | sudo tee /etc/apt/sources.list.d/mysql.list
+  188  sudo apt update
+  189  sudo apt install mysql-server -y
+  190  sudo apt-get purge -y mariadb-server mariadb-client mariadb-common mariadb-server-core mariadb-client-core
+  191  sudo apt-get autoremove -y
+  192  sudo apt-get autoclean
+  193  sudo apt update
+  194  sudo apt install mysql-server -y
+  195  mysql -V
+  196  sudo mysql -u root <<EOF
+  197  CREATE DATABASE IF NOT EXISTS magento;
+  198  CREATE USER IF NOT EXISTS 'test-ssh'@'localhost' IDENTIFIED WITH mysql_native_password BY 'YourStrongPassword123!';
+  199  GRANT ALL PRIVILEGES ON magento.* TO 'test-ssh'@'localhost';
+  200  FLUSH PRIVILEGES;
+  201  EOF
+  202  sudo grep 'temporary password' /var/log/mysql/error.log
+  203  sudo mysql -u root -p
+  204  mysql -u test-ssh -p'YourStrongPassword123!' -e "status"
+  205  sudo -su test-ssh
+  206  cd ~/magento2
+  207  sudo mysql -u root -p
+  208  sudo -su test-ssh
+  209  # 1. Clear the database
+  210  mysql -u test-ssh -p'YourStrongPassword123!' -e "DROP DATABASE magento; CREATE DATABASE magento;"
+  211  # 2. Remove the partial deployment configuration
+  212  rm -f app/etc/env.php
+  213  sudo -su test-ssh
+  214  composer require magento/module-elasticsearch magento/module-elasticsearch-7 --no-update
+  215  composer update
+  216  grep -r "shortName" vendor/magento/module-elasticsearch*/etc/config.xml
+  217  sudo apt update && sudo apt install openjdk-17-jdk -y
+  218  wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+  219  echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
+  220  sudo apt update && sudo apt install elasticsearch -y
+  221  sudo systemctl enable --now elasticsearch
+  222  curl -X GET "localhost:9200/"
+  223  mysql -u test-ssh -p'YourStrongPassword123!' -e "DROP DATABASE magento; CREATE DATABASE magento;"
+  224  bin/magento setup:install --base-url=https://test.mgt.com/ --db-host=localhost --db-name=magento --db-user=test-ssh --db-password='YourStrongPassword123!' --admin-firstname=Admin --admin-lastname=User --admin-email=admin@example.com --admin-user=admin --admin-password='Admin12345!' --search-engine=elasticsearch --elasticsearch-host=127.0.0.1 --elasticsearch-port=9200 --session-save=redis --session-save-redis-host=127.0.0.1 --session-save-redis-port=6379 --session-save-redis-db=2 --cache-backend=redis --cache-backend-redis-server=127.0.0.1 --cache-backend-redis-port=6379 --cache-backend-redis-db=0
+  225  sudo -su test-ssh
+  226  sudo apt install apt-transport-https sudo curl
+  227  curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+  228  echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
+  229  sudo apt update && sudo apt install elasticsearch
+  230  sudo systemctl enable --now elasticsearch
+  231  curl -XGET 'localhost:9200'
+  232  suso -su test-ssh
+  233  sudo -su test-ssh
+  234  sudo mkdir -p /var/www/html/magento
+  235  sudo chown test-ssh:clp /var/www/html/magento
+  236  sudo chmod 775 /var/www/html/magento
+  237  sudo -u test-ssh -i
+  238  sudo nano /etc/php/8.3/fpm/pool.d/test-ssh.conf
+  239  sudo nano /etc/nginx/nginx.conf
+  240  sudo nano /etc/nginx/sites-available/phpmyadmin
+  241  sudo ln -s /etc/nginx/sites-available/phpmyadmin /etc/nginx/sites-enabled/
+  242  sudo nginx -t && sudo systemctl reload nginx
+  243  sudo systemctl restart nginx
+  244  sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/mgt.key -out /etc/ssl/certs/mgt.crt -subj "/C=US/ST=State/L=City/O=Organization/CN=test.mgt.com"
+  245  sudo nginx -t
+  246  sudo systemctl restart nginx
+  247  sudo -u test-ssh -i
+  248  sudo mysql -u root
+  249  sudo mysql
+  250  sudo cat /etc/mysql/debian.cnf
+  251  sudo systemctl stop mysql
+  252  sudo mkdir -p /var/run/mysqld
+  253  sudo chown mysql:mysql /var/run/mysqld
+  254  sudo mysqld_safe --skip-grant-tables --skip-networking &
+  255  sudo mysql -u root --protocol=socket
+  256  sudo systemctl stop mysql
+  257  sudo mysqld_safe --skip-grant-tables --skip-networking &
+  258  mysql -u root
+  259  sudo killall -9 mysqld mysqld_safe
+  260  sudo mkdir -p /var/run/mysqld
+  261  sudo chown mysql:mysql /var/run/mysqld
+  262  sudo mysqld_safe --skip-grant-tables --skip-networking &
+  263  mysql -u root
+  264  sudo killall -9 mysqld
+  265  sudo systemctl start mysql
+  266  sudo -u test-ssh -i
+  267  sudo mysql -u root
+  268  SET GLOBAL log_bin_trust_function_creators = 1;
+  269  sudo systemctl stop mysql
+  270  sudo mysqld_safe --skip-grant-tables --skip-networking &
+  271  sudo systemctl mask mysql
+  272  sudo systemctl stop mysql
+  273  sudo killall -9 mysqld mysqld_safe
+  274  sudo mysqld_safe --skip-grant-tables --skip-networking &
+  275  mysql -u root
+  276  # 1. Kill the bypass
+  277  sudo killall -9 mysqld
+  278  # 2. Unmask and Start
+  279  sudo systemctl unmask mysql
+  280  sudo systemctl start mysql
+  281  sudo systemctl status mysql
+  282  sudo killall -9 mysqld_safe
+  283  sudo killall -9 mysqld
+  284  ps aux | grep mysql | grep -v grep
+  285  sudo rm -rf /var/run/mysqld/*
+  286  sudo systemctl daemon-reload
+  287  sudo systemctl start mysql
+  288  sudo systemctl status mysql
+  289  mysql -u magento_user -p -e "SHOW GLOBAL VARIABLES LIKE 'log_bin_trust_function_creators';"
+  290  sudo mysql
+  291  mysql -u root
+  292  sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+  293  sudo systemctl daemon-reload
+  294  sudo systemctl restart mysql
+  295  mysql -u root
+  296  sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+  297  sudo systemctl restart mysql
+  298  mysql -u magento_user -p -e "SHOW GLOBAL VARIABLES LIKE 'log_bin_trust_function_creators';"
+  299  # 1. Create the reset file
+  300  # 2. Stop MySQL
+  301  sudo systemctl stop mysql
+  302  # 3. Start MySQL manually using the init file
+  303  sudo /usr/sbin/mysqld --init-file=/home/admin/mysql-init.sql &
+  304  # Use single quotes to prevent bash from interpreting the characters
+  305  echo "ALTER USER 'magento_user'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Password123'; SET GLOBAL log_bin_trust_function_creators = 1;" > ~/mysql-init.sql
+  306  # 1. Ensure MySQL is stopped
+  307  sudo systemctl stop mysql
+  308  # 2. Run the manual start with the init file
+  309  sudo /usr/sbin/mysqld --user=mysql --init-file=/home/admin/mysql-init.sql &
+  310  # 1. Kill the manual process
+  311  sudo killall -9 mysqld
+  312  # 2. Start the service
+  313  sudo systemctl start mysql
+  314  # 3. Remove the temp file
+  315  rm ~/mysql-init.sql
+  316  mysql -u magento_user -pPassword123 -e "SHOW GLOBAL VARIABLES LIKE 'log_bin_trust_function_creators';"
+  317  sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+  318  sudo systemctl restart mysql
+  319  mysql -u magento_user -pPassword123 -e "SHOW GLOBAL VARIABLES LIKE 'log_bin_trust_function_creators';"
+  320  sudo -u test-ssh -i
+  321  sudo -su test-ssh
+  322  sudo ss -tulpn | grep -E ':(80|443|8080)'
+  323  bin/magento config:set --scope=default --scope-code=0 system/full_page_cache/caching_application 2
+  324  curl -I -k https://test.mgt.com/
+  325  cd /var/www/html/magento
+  326  sudo -su test-ssh
+  327  exit
+  328  sudo systemctl stop nginx
+  329  sudo systemctl stop varnish
+  330  sudo killall -9 nginx varnishd 2>/dev/null
+  331  sudo ss -tulpn | grep -E ':(80|443|8080)'
+  332  # Start Nginx first
+  333  sudo systemctl start nginx
+  334  # Now start Varnish
+  335  sudo systemctl start varnish
+  336  sudo ss -tulpn | grep -E ':(80|443|8080)'
+  337  sudo nano /etc/nginx/sites-available/magento
+  338  sudo rm /etc/nginx/sites-enabled/default
+  339  sudo systemctl stop nginx varnish
+  340  sudo killall -9 nginx varnishd 2>/dev/null
+  341  sudo systemctl start nginx
+  342  sudo systemctl start varnish
+  343  sudo ss -tulpn | grep -E ':(80|443|8080)'
+  344  sudo rm /etc/nginx/sites-enabled/default
+  345  sudo nano /etc/nginx/sites-available/magento
+  346  sudo ss -tulpn | grep :80
+  347  sudo grep -r "listen" /etc/nginx/ | grep "80"
+  348  # Look for the 'root' directive in your config
+  349  sudo grep -r "root" /etc/nginx/sites-enabled/
+  350  sudo grep -r "test.mgt.com" /etc/nginx/
+  351  sudo nano /etc/nginx/sites-available/magento
+  352  # Link the config if not already linked
+  353  sudo ln -s /etc/nginx/sites-available/magento /etc/nginx/sites-enabled/
+  354  # Test for syntax errors
+  355  sudo nginx -t
+  356  # Restart NGINX
+  357  sudo systemctl restart nginx
+  358  sudo nano /etc/nginx/sites-available/magento
+  359  # Test the syntax
+  360  sudo nginx -t
+  361  # If it says "syntax is ok", restart
+  362  sudo systemctl restart nginx
+  363  sudo nano /etc/nginx/sites-available/magento
+  364  ls /run/php/php8.3-fpm.sock
+  365  sudo nginx -t
+  366  sudo systemctl restart nginx
+  367  systemctl status nginx
+  368  sudo mkdir -p /etc/nginx/ssl
+  369  sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/magento.key -out /etc/nginx/ssl/magento.crt -subj "/C=US/ST=State/L=City/O=Organization/CN=test.mgt.com"
+  370  sudo nginx -t
+  371  sudo systemctl restart nginx
+  372  sudo ss -tulpn | grep -E ':(80|443|8080)'
+  373  sudo rm /etc/nginx/sites-enabled/default
+  374  sudo rm /etc/nginx/sites-enabled/phpmyadmin
+  375  sudo grep -r "listen" /etc/nginx/ | grep "80"
+  376  sudo systemctl stop nginx
+  377  sudo systemctl stop varnish
+  378  sudo killall -9 nginx varnishd 2>/dev/null
+  379  sudo ss -tulpn | grep -E ':(80|443|8080)'
+  380  sudo grep -r "listen" /etc/nginx/sites-enabled/ | grep "80"
+  381  sudo systemctl start nginx
+  382  sudo systemctl start varnish
+  383  sudo ss -tulpn | grep -E ':(80|443|8080)'
+  384  curl -I -k https://test.mgt.com/
+  385  # Ensure Nginx can read the SSL folder and files
+  386  sudo chmod 755 /etc/nginx/ssl
+  387  sudo chmod 644 /etc/nginx/ssl/magento.crt
+  388  sudo chmod 640 /etc/nginx/ssl/magento.key
+  389  sudo chown -R root:www-data /etc/nginx/ssl
+  390  curl -I -k -vvv https://test.mgt.com/
+  391  sudo chown -R test-ssh:clp /var/www/html/magento
+  392  sudo find /var/www/html/magento -type d -exec chmod 775 {} \;
+  393  sudo find /var/www/html/magento -type f -exec chmod 664 {} \;
+  394  sudo chmod -R g+w /var/www/html/magento/var
+  395  sudo chmod -R g+w /var/www/html/magento/pub
+  396  sudo chmod -R g+w /var/www/html/magento/generated
+  397  sudo nano /etc/nginx/sites-available/magento
+  398  curl -I http://localhost:8080/
+  399  sudo systemctl status php8.3-fpm
+  400  ls -la /run/php/
+  401  sudo nano /etc/nginx/sites-available/magento
+  402  # Allow NGINX to communicate with the test-ssh socket
+  403  sudo chmod 666 /run/php/php8.3-fpm-test-ssh.sock
+  404  sudo chown test-ssh:clp /var/www/html/magento/app/etc/env.php
+  405  sudo chmod 644 /var/www/html/magento/app/etc/env.php
+  406  sudo systemctl restart nginx
+  407  # Test the backend directly (Nginx -> PHP-FPM)
+  408  curl -I http://localhost:8080/
+  409  sudo nginx -t
+  410  sudo nano /etc/nginx/sites-available/magento
+  411  # Test syntax again
+  412  sudo nginx -t
+  413  # If it says 'syntax is ok', restart
+  414  sudo systemctl restart nginx
+  415  # Ensure the socket has the right permissions
+  416  sudo chmod 666 /run/php/php8.3-fpm-test-ssh.sock
+  417  sudo nano /etc/nginx/sites-available/magento
+  418  # 1. Check syntax
+  419  sudo nginx -t
+  420  # 2. If it passes, restart
+  421  sudo systemctl restart nginx
+  422  # 3. Ensure permissions for the socket
+  423  sudo chmod 666 /run/php/php8.3-fpm-test-ssh.sock
+  424  sudo ss -tulpn | grep -E ':(80|443|8080)'
+  425  curl -I http://localhost:8080/
+  426  curl -I -k https://test.mgt.com/
+  427  sudo grep -r "443" /etc/nginx/sites-enabled/
+  428  sudo rm /etc/nginx/sites-enabled/default
+  429  sudo grep -r "443" /etc/nginx/
+  430  sudo ln -s /etc/nginx/sites-available/magento /etc/nginx/sites-enabled/
+  431  sudo rm /etc/nginx/sites-enabled/pma
+  432  sudo rm /etc/nginx/sites-enabled/phpmyadmin
+  433  ls -l /etc/nginx/sites-enabled/
+  434  ls -l /etc/nginx/conf.d/
+  435  sudo nano /etc/nginx/sites-available/magento
+  436  sudo nano /etc/nginx/sites-available/magento
+  437  sudo tail -n 20 /var/log/nginx/error.log
+  438  sudo nano /etc/nginx/sites-available/magento
+  439  sudo chmod 666 /run/php/php8.3-fpm-test-ssh.sock
+  440  sudo nano /etc/nginx/sites-available/magento
+  441  sudo chmod 666 /run/php/php8.3-fpm-test-ssh.sock
+  442  sudo nginx -t
+  443  sudo systemctl restart nginx
+  444  curl -I -k https://test.mgt.com/
+  445  sudo nano /etc/nginx/sites-available/magento
+  446  # Ensure the web server group can enter the Magento directories
+  447  sudo chmod +x /var/www/html
+  448  sudo chmod +x /var/www/html/magento
+  449  sudo chmod +x /var/www/html/magento/pub
+  450  # Re-verify socket permissions for the backend
+  451  sudo chmod 666 /run/php/php8.3-fpm-test-ssh.sock
+  452  sudo nginx -t
+  453  sudo systemctl restart nginx
+  454  curl -I -k https://test.mgt.com/
+  455  sudo ss -tulpn | grep -E ':(80|443|8080)'
+  456  curl -I -k --resolve test.mgt.com:443:127.0.0.1 https://test.mgt.com/
+  457  curl -I http://127.0.0.1:80/
+  458  sudo nano /etc/nginx/sites-available/magento
+  459  curl -I http://127.0.0.1:80/
+  460  curl -I -k https://test.mgt.com/
+  461  sudo tail -f /var/log/nginx/error.log
+  462  # OR if OpenResty is in a custom path:
+  463  sudo tail -f /usr/local/openresty/nginx/logs/error.log
+  464  sudo nano /etc/openresty/nginx.conf
+  465  sudo nano /usr/local/openresty/nginx/conf/nginx.conf
+  466  /etc/nginx/nginx.conf
+  467  sudo nano /etc/nginx/nginx.conf
+  468  sudo nginx -t
+  469  sudo systemctl reload nginx
+  470  grep -r "server_name" /etc/nginx/sites-enabled/
+  471  sudo nginx -T | grep "server_name"
+  472  grep -r "test.mgt.com" /etc/nginx/
+  473  sudo cat /etc/nginx/sites-available/magento
+  474  sudo nano /etc/nginx/sites-available/magento
+  475  curl -I http://127.0.0.1:80/
+  476  curl -I -k https://test.mgt.com/
+  477  sudo lsof -i :443 -s TCP:LISTEN
+  478  # OR
+  479  sudo netstat -tulpn | grep :443
+  480  sudo ss -tulnp
+  481  sudo ufw status
+  482  # List all current firewall rules
+  483  sudo nft list ruleset
+  484  sudo nginx -t && sudo systemctl reload nginx
+  485  curl -I -k https://test.mgt.com/
+  486  curl -I http://127.0.0.1:80/
+  487  curl -I http://127.0.0.1:8080/
+  488  sudo chown -R test-ssh:clp /var/www/html/magento
+  489  sudo chmod -R 775 /var/www/html/magento
+  490  ls -l /var/www/html/magento/pub/index.php
+  491  # Check if OpenResty is running as a service
+  492  sudo systemctl stop openresty
+  493  sudo systemctl disable openresty
+  494  # If it's not a service, kill the process manually
+  495  sudo pkill -9 openresty
+  496  # Verify no openresty processes are left
+  497  ps aux | grep openresty
+  498  sudo systemctl restart nginx
+  499  sudo ss -tulnp | grep :443
+  500  curl -I -k https://test.mgt.com/
+  501  sudo tail -f /var/log/nginx/error.log
+  502  sudo nano /etc/nginx/sites-available/magento
+  503  curl -I -k https://test.mgt.com/
+  504  sudo ss -tulpn | grep :443
+  505  # Check if UFW is active
+  506  sudo ufw status
+  507  # If active, allow port 443
+  508  sudo ufw allow 443/tcp
+  509  # If UFW isn't installed, check nftables
+  510  sudo nft list ruleset | grep 443
+  511  sudo iptables -L -n
+  512  curl -I -k https://test.mgt.com/
+  513  sudo nano /etc/hosts
+  514  # Test the SSL Frontend
+  515  curl -I -k https://test.mgt.com/
+  516  # Test the Varnish Cache (Port 80)
+  517  curl -I http://test.mgt.com/
+  518  curl -I https://test.mgt.com/
+  519  curl -I -k https://test.mgt.com/
+  520  redis-cli monitor
+  521  ps aux | grep -E 'nginx|php-fpm'
+  522  redis-cli monitor
+  523  bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-server=127.0.0.1 --cache-backend-redis-db=0
+  524  cd /var/www/html/magento
+  525  sudo -u test-ssh
+  526  sudo -u test-ssh bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-server=127.0.0.1 --cache-backend-redis-db=0
+  527  sudo -u test-ssh bin/magento setup:config:set --session-save=redis --session-save-redis-server=127.0.0.1 --session-save-redis-db=1
+  528  redis-cli monitorsudo -u test-ssh bin/magento setup:config:set --session-save=redis --session-save-redis-host=127.0.0.1 --session-save-redis-db=1
+  529  sudo -u test-ssh bin/magento setup:config:set --session-save=redis --session-save-redis-host=127.0.0.1 --session-save-redis-db=1
+  530  redis-cli monitor
+  531  sudo nano /etc/hosts
+  532  sudo nano /etc/nginx/sites-available/phpmyadmin
+  533  sudo ln -s /etc/nginx/sites-available/phpmyadmin /etc/nginx/sites-enabled/
+  534  sudo nginx -t
+  535  sudo systemctl reload nginx
+  536  127.0.0.1 pma.mgt.com
+  537  sudo nano /etc/hosts
+  538  curl -I -k https://pma.mgt.com/
+  539  sudo nano /etc/hosts
+  540  sudo nano /etc/nginx/sites-available/phpmyadmin
+  541  sudo nano /etc/nginx/sites-available/magento
+  542  sudo ln -s /etc/nginx/sites-available/phpmyadmin /etc/nginx/sites-enabled/
+  543  sudo systemctl reload nginx
+  544  curl -I -k https://pma.mgt.com/
+  545  grep -r "default_server" /etc/nginx/sites-enabled/
+  546  sudo nano /etc/nginx/sites-available/phpmyadmin
+  547  sudo nano /etc/nginx/sites-available/magento
+  548  sudo systemctl reload nginx
+  549  curl -I -k https://pma.mgt.com/
+  550  sudo rm /etc/nginx/sites-enabled/magento
+  551  sudo systemctl reload nginx
+  552  curl -I -k https://pma.mgt.com/
+  553  sudo ln -s /etc/nginx/sites-available/magento /etc/nginx/sites-enabled/
+  554  sudo nano /etc/nginx/sites-available/magento
+  555  sudo nano
+  556  sudo nano /etc/nginx/sites-available/magento
+  557  sudo nano /etc/nginx/sites-available/phpmyadmin
+  558  sudo nano /etc/nginx/sites-available/magento
+  559  sudo nginx -t
+  560  sudo systemctl reload nginx
+  561  curl -I -k https://pma.mgt.com/
+  562  sudo mv /etc/nginx/sites-enabled/phpmyadmin /etc/nginx/sites-enabled/00-phpmyadmin
+  563  sudo nano /etc/nginx/sites-available/magento
+  564  sudo systemctl reload nginx
+  565  sudo nano /etc/nginx/sites-available/phpmyadmin
+  566  sudo nano /etc/nginx/sites-available/magento
+  567  sudo mv /etc/nginx/sites-enabled/phpmyadmin /etc/nginx/sites-enabled/00-phpmyadmin
+  568  sudo systemctl reload nginx
+  569  # First, remove any broken or existing links to be safe
+  570  sudo rm /etc/nginx/sites-enabled/phpmyadmin
+  571  sudo rm /etc/nginx/sites-enabled/00-phpmyadmin
+  572  # Create the new high-priority link
+  573  sudo ln -s /etc/nginx/sites-available/phpmyadmin /etc/nginx/sites-enabled/00-phpmyadmin
+  574  sudo nginx -t
+  575  sudo systemctl reload nginx
+  576  curl -I -k https://pma.mgt.com/
+  577  /etc/nginx/sites-available/phpmyadmin
+  578  sudo nano /etc/nginx/sites-available/phpmyadmin
+  579  sudo nano /etc/nginx/nginx.conf
+  580  sudo nano /etc/nginx/sites-available/phpmyadmin
+  581  sudo nginx -t
+  582  sudo systemctl reload nginx
+  583  curl -I -k https://13.60.227.121/
+  584  curl -I -k https://pma.mgt.com/
+  585  sudo systemctl stop varnish
+  586  sudo systemctl reload nginx
+  587  curl -I -k https://pma.mgt.com/
+  588  sudo rm /etc/nginx/sites-enabled/magento
+  589  sudo systemctl reload nginx
+  590  curl -I -k https://pma.mgt.com/
+  591  sudo nano /usr/share/phpmyadmin
+  592  ls -la /usr/share/phpmyadmin/index.php
+  593  sudo apt update && sudo apt install phpmyadmin -y
+  594  # Link PHPMyAdmin with top priority
+  595  sudo ln -s /etc/nginx/sites-available/phpmyadmin /etc/nginx/sites-enabled/00-phpmyadmin
+  596  # Ensure Magento is linked with a name that loads later
+  597  sudo ln -s /etc/nginx/sites-available/magento /etc/nginx/sites-enabled/zz-magento
+  598  # Apply the changes
+  599  sudo systemctl reload nginx
+  600  sudo ln -sf /etc/nginx/sites-available/phpmyadmin /etc/nginx/sites-enabled/00-phpmyadmin
+  601  sudo ln -sf /etc/nginx/sites-available/magento /etc/nginx/sites-enabled/zz-magento
+  602  sudo nginx -t
+  603  sudo systemctl reload nginx
+  604  curl -I -k https://pma.mgt.com/
+  605  curl -I -k https://test.mgt.com/
+  606  curl -I http://test.mgt.com/
+  607  curl -I -k https://test.mgt.com/ | grep -i varnish
+  608  ps aux | grep nginx
+  609  redis-cli monitor
+  610  sudo passwd admin
+  611  sudo nano /etc/ssh/sshd_config
+  612  sudo systemctl restart ssh
+  613  nano assessment_audit.sh
+  614  chmod +x assessment_audit.sh
+  615  ./assessment_audit.sh
+  616  sudo systemctl start varnish
+  617  sudo systemctl enable varnish
+  618  sudo systemctl status varnish
+  619  sudo nano /etc/nginx/sites-available/
+  620  sudo nano /etc/nginx/sites-available/magento
+  621  sudo systemctl restart nginx
+  622  sudo systemctl restart varnish
+  623  ./assessment_audit.sh
+  624  sudo nano /etc/nginx/sites-available/magento
+  625  sudo nano /etc/varnish/default.vcl
+  626  sudo systemctl restart nginx
+  627  sudo systemctl restart varnish
+  628  ./assessment_audit.sh
+  629  sudo nano /etc/nginx/sites-available/magento
+  630  sudo nano /etc/varnish/default.vcl
+  631  sudo nano /etc/default/varnish
+  632  sudo nano /etc/nginx/sites-available/magento
+  633  sudo nano /etc/varnish/default.vcl
+  634  sudo systemctl daemon-reload
+  635  sudo systemctl restart nginx
+  636  sudo systemctl restart varnish
+  637  ./assessment_audit.sh
+  638  sudo nano /etc/varnish/default.vcl
+  639  sudo systemctl edit --full varnish.service
+  640  sudo nano /etc/varnish/default.vcl
+  641  sudo systemctl edit --full varnish.service
+  642  sudo systemctl daemon-reload
+  643  sudo systemctl restart nginx
+  644  sudo systemctl restart varnish
+  645  ./assessment_audit.sh
+  646  sudo journalctl -u varnish --no-pager | tail -n 20
+  647  sudo ss -tulpn | grep :80
+  648  Jan 19 18:27:19 ip-172-31-32-171 systemd[1]: varnish.service: Failed with result 'exit-code'.
+  649  admin@ip-172-31-32-171:~$ sudo ss -tulpn | grep :80
+  650  tcp   LISTEN 0      511                  0.0.0.0:8083       0.0.0.0:*    users:(("nginx",pid=12180,fd=8),("nginx",pid=12179,fd=8),("nginx",pid=12178,fd=8))
+  651  tcp   LISTEN 0      511                  0.0.0.0:8081       0.0.0.0:*    users:(("nginx",pid=12180,fd=7),("nginx",pid=12179,fd=7),("nginx",pid=12178,fd=7))
+  652  tcp   LISTEN 0      511                  0.0.0.0:80         0.0.0.0:*    users:(("nginx",pid=12180,fd=5),("nginx",pid=12179,fd=5),("nginx",pid=12178,fd=5))
+  653  admin@ip-172-31-32-171:~$
+  654  grep -r "listen 80" /etc/nginx/sites-enabled/
+  655  sudo rm /etc/nginx/sites-enabled/default
+  656  sudo nano /etc/nginx/sites-available/magento
+  657  # Stop both services to clear the ports
+  658  sudo systemctl stop nginx
+  659  sudo systemctl stop varnish
+  660  # Start Nginx first on its new ports
+  661  sudo systemctl start nginx
+  662  # Start Varnish on Port 80
+  663  sudo systemctl start varnish
+  664  ./assessment_audit.sh
+  665  sudo fuser -k 80/tcp
+  666  # 1. Clear any remaining locks
+  667  sudo fuser -k 80/tcp
+  668  sudo fuser -k 8080/tcp
+  669  # 2. Start Varnish first so it secures Ports 80 and 8080
+  670  sudo systemctl start varnish
+  671  # 3. Start Nginx to handle the SSL and Backend logic
+  672  sudo systemctl start nginx
+  673  sudo systemctl status varnish
+  674  sudo ss -tulpn | grep :80
+  675  grep -r "listen 80" /etc/nginx/sites-enabled/
+  676  sudo systemctl stop nginx
+  677  sudo systemctl reset-failed varnish
+  678  sudo systemctl start varnish
+  679  sudo systemctl start nginx
+  680  ./assessment_audit.sh
+  681  sudo lsof -i :80
+  682  sudo grep -rn "80" /etc/nginx/
+  683  # Remove the links that enable these configurations
+  684  sudo rm /etc/nginx/sites-enabled/default
+  685  sudo rm /etc/nginx/sites-enabled/phpmyadmin
+  686  sudo fuser -k 80/tcp
+  687  sudo fuser -k 8080/tcp
+  688  sudo rm /etc/nginx/sites-enabled/default
+  689  sudo rm /etc/nginx/sites-enabled/phpmyadmin
+  690  ls /etc/nginx/sites-enabled/
+  691  # 1. Reset the failure limits so systemd tries again
+  692  sudo systemctl reset-failed varnish
+  693  # 2. Hard stop both services
+  694  sudo systemctl stop nginx
+  695  sudo systemctl stop varnish
+  696  # 3. Start Varnish FIRST (it must claim Port 80 before Nginx can)
+  697  sudo systemctl start varnish
+  698  # 4. Start Nginx SECOND
+  699  sudo systemctl start nginx
+  700  ./assessment_audit.sh
+  701  sudo rm /etc/nginx/sites-enabled/00-phpmyadmin
+  702  ls /etc/nginx/sites-enabled/
+  703  sudo fuser -k 80/tcp
+  704  sudo ss -tulpn | grep :80
+  705  # 1. Reset the failure counter for the Varnish service
+  706  sudo systemctl reset-failed varnish
+  707  # 2. Hard stop both services to ensure a clean slate
+  708  sudo systemctl stop nginx
+  709  sudo systemctl stop varnish
+  710  # 3. Start Varnish FIRST so it can claim Port 80 and 8080
+  711  sudo systemctl start varnish
+  712  # 4. Start Nginx SECOND
+  713  sudo systemctl start nginx
+  714  ./assessment_audit.sh
+  715  grep "listen" /etc/nginx/sites-enabled/*
+  716  sudo nano /etc/varnish/default.vcl
+  717  sudo nano /etc/nginx/sites-available/magento
+  718  # Apply the new Nginx and Varnish settings
+  719  sudo systemctl restart nginx
+  720  sudo systemctl restart varnish
+  721  # Run the audit script to check for a full PASS
+  722  ./assessment_audit.sh
+  723  sudo ss -tulpn | grep :8083
+  724  curl -I -H "Host: test.mgt.com" http://127.0.0.1:8083
+  725  ls -la /run/php/php8.3-fpm-test-ssh.sock
+  726  sudo tail -n 20 /var/log/nginx/error.log
+  727  sudo nano /etc/nginx/sites-available/phpmyadmin
+  728  # Restart everything for a clean finish
+  729  sudo systemctl restart varnish nginx php8.3-fpm
+  730  ./assessment_audit.sh
+  731  sudo nano /etc/varnish/default.vcl
+  732  # 1. Reload the systemd units
+  733  sudo systemctl daemon-reload
+  734  # 2. Restart the services in dependency order
+  735  sudo systemctl restart php8.3-fpm
+  736  sudo systemctl restart nginx
+  737  sudo systemctl restart varnish
+  738  ./assessment_audit.sh
+  739  curl -I -H "Host: test.mgt.com" http://127.0.0.1:8083
+  740  sudo nano /etc/varnish/default.vcl
+  741  sudo systemctl edit --full varnish.service
+  742  sudo systemctl daemon-reload
+  743  sudo systemctl restart varnish
+  744  ./assessment_audit.sh
+  745  sudo varnishlog -g request -q "RespStatus == 502"
+  746  sudo tail -n 10 /var/log/nginx/error.log
+  747  sudo ss -tulpn | grep varnish
+  748  sudo systemctl edit --full varnish.service'
+ExecStart=/usr/sbin/varnishd \
+          -j unix,user=vcache \
+          -F \
+          -a :80 -a :8080 \
+          -T localhost:6082 \
+          -f /etc/varnish/default.vcl \
+          -s malloc,256m
+
+
+  749  sudo systemctl edit --full varnish.service
+  750  # Tell systemd to look for the updated service file
+  751  sudo systemctl daemon-reload
+  752  # Restart Varnish to open ports 80 and 8080
+  753  sudo systemctl restart varnish
+  754  sudo ss -tulpn | grep varnish
+  755  sudo systemctl edit --full varnish.service
+  756  sudo systemctl daemon-reload
+  757  sudo systemctl restart varnish
+  758  sudo ss -tulpn | grep varnish
+  759  sudo journalctl -u varnish -n 20 --no-pager
+  760  sudo nano /lib/systemd/system/varnish.service
+  761  sudo systemctl daemon-reload
+  762  sudo systemctl restart varnish
+  763  sudo ss -tulpn | grep varnish
+  764  sudo nano /lib/systemd/system/varnish.service
+  765  # Clear any stuck overrides
+  766  sudo rm -rf /etc/systemd/system/varnish.service.d
+  767  # Reload and Restart
+  768  sudo systemctl daemon-reload
+  769  sudo systemctl restart varnish
+  770  sudo ss -tulpn | grep varnish
+  771  ./assessment_audit.sh
+  772  history | grep assessment_audit.sh
+  773  history
+admin@ip-172-31-32-171:~$ history | grep assessment_audit.sh
+  613  nano assessment_audit.sh
+  614  chmod +x assessment_audit.sh
+  615  ./assessment_audit.sh
+  623  ./assessment_audit.sh
+  628  ./assessment_audit.sh
+  637  ./assessment_audit.sh
+  645  ./assessment_audit.sh
+  664  ./assessment_audit.sh
+  680  ./assessment_audit.sh
+  700  ./assessment_audit.sh
+  714  ./assessment_audit.sh
+  722  ./assessment_audit.sh
+  730  ./assessment_audit.sh
+  738  ./assessment_audit.sh
+  744  ./assessment_audit.sh
+  771  ./assessment_audit.sh
+  772  history | grep assessment_audit.sh
+  774  history | grep assessment_audit.sh
+admin@ip-172-31-32-171:~$ history -d X
+-bash: history: X: history position out of range
+admin@ip-172-31-32-171:~$

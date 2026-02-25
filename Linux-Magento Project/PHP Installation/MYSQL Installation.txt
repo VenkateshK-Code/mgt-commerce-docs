@@ -1,0 +1,80 @@
+MYSQL Installation
+
+# Download the MySQL Config Configurator
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.32-1_all.deb
+
+# Configure the Repo (INTERACTIVE STEP)
+# 1. Run this command
+dpkg -i mysql-apt-config_0.8.32-1_all.deb
+
+
+
+
+1. Fix the missing dependency
+Run this command to install the missing package:
+
+Bash
+
+apt install -y gnupg
+2. Retry the MySQL Config Installation
+Now that gnupg is installed, run the configuration command again:
+
+Bash
+
+dpkg -i mysql-apt-config_0.8.32-1_all.deb
+⚠️ Reminder for the Blue Screen:
+
+When the blue screen appears, ensure the top line says "mysql-8.0".
+
+Select Ok and press Enter.
+
+3. Finish MySQL Installation
+Once the blue screen is done, run these to finish:
+
+Bash
+
+apt update
+apt install -y mysql-server
+(Remember to set a strong Root Password when prompted).
+
+Reply "Done" when MySQL is successfully installed!
+
+
+
+Key mismatch error:
+
+
+
+1. Update the MySQL GPG Key
+Run this command to fetch the latest official MySQL GPG key and add it to your system:
+
+Bash
+
+gpg --keyserver keyserver.ubuntu.com --recv-keys B7B3B788A8D3785C
+gpg --export B7B3B788A8D3785C | tee /usr/share/keyrings/mysql-keyring.gpg > /dev/null
+2. Update the Repository List
+Now, we need to tell the MySQL config to use that specific keyring. Run this to overwrite the previous config:
+
+Bash
+
+echo "deb [signed-by=/usr/share/keyrings/mysql-keyring.gpg] http://repo.mysql.com/apt/debian/ bookworm mysql-8.0" > /etc/apt/sources.list.d/mysql.list
+3. Install MySQL Server
+Now that the signature is trusted, the installation will work:
+
+Bash
+
+apt update
+apt install -y mysql-server
+
+
+
+# Download the MySQL APT repository config tool
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.29-1_all.deb
+sudo dpkg -i mysql-apt-config_0.8.29-1_all.deb
+# (In the interactive menu, ensure MySQL 8.0 is selected, then choose 'OK')
+
+sudo apt update
+sudo apt install -y mysql-server
+
+# Secure the installation
+sudo mysql_secure_installation

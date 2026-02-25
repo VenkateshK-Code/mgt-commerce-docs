@@ -1,0 +1,48 @@
+Step 3: NGINX & Self-Signed SSL (Requirements #5 & #7)
+You need to generate an SSL certificate and configure NGINX to use the new PHP pool. Run these as root:
+
+1. Generate Self-Signed SSL:
+
+Bash
+
+mkdir -p /etc/nginx/ssl
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+-keyout /etc/nginx/ssl/magento.key \
+-out /etc/nginx/ssl/magento.crt \
+-subj "/C=US/ST=State/L=City/O=Organization/CN=test.mgt.com"
+2. Configure NGINX Virtual Host: Create /etc/nginx/sites-available/magento and add a server block that redirects HTTP to HTTPS and points to your test-ssh PHP socket.
+
+
+nano /etc/nginx/sites-available/magento
+
+
+Nginx
+
+upstream fastcgi_backend {
+    server unix:/run/php/php8.3-fpm-test-ssh.sock;
+}
+
+server {
+    listen 80;
+    server_name test.mgt.com;
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name test.mgt.com;
+    ssl_certificate /etc/nginx/ssl/magento.crt;
+    ssl_certificate_key /etc/nginx/ssl/magento.key;
+
+    set $MAGE_ROOT /var/www/html/magento;
+    include /var/www/html/magento/nginx.conf.sample;
+}
+Step 4: Final Permissions Check
+Ensure the web server can read your files:
+
+Bash
+
+chown -R test-ssh:clp /var/www/html/magento
+find /var/www/html/magento -type d -exec chmod 775 {} +
+find /var/www/html/magento -type f -exec chmod 664 {} +
+chmod +x /var/www/html/magento/bin/magento

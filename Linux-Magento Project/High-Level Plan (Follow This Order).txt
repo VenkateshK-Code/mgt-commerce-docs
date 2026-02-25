@@ -1,0 +1,260 @@
+High-Level Plan (Follow This Order)
+Phase 1: Server & OS Setup (Day 1)
+
+Create AWS EC2 (or DigitalOcean Droplet)
+
+OS: Debian 12
+
+Instance size: Minimum 2 CPU / 4 GB RAM
+
+Storage: 30–40 GB
+
+SSH into the server
+
+Update system:
+
+sudo apt update && sudo apt upgrade -y
+
+
+
+Phase 2: User & Group Setup (Very Important)
+
+They are strict about this.
+
+sudo groupadd clp
+sudo useradd -m -s /bin/bash -g clp test-ssh
+sudo passwd test-ssh
+
+
+Switch to that user when working on Magento:
+
+su - test-ssh
+
+Phase 3: Install Required Services (Day 2–3)
+Install NGINX
+sudo apt install nginx -y
+
+Install PHP 8.3 + Extensions (Magento Required)
+
+Add PHP repository if needed:
+
+sudo apt install lsb-release ca-certificates apt-transport-https software-properties-common -y
+sudo add-apt-repository ppa:ondrej/php
+sudo apt update
+
+
+Install PHP 8.3:
+
+sudo apt install php8.3 php8.3-fpm php8.3-cli php8.3-mysql php8.3-curl \
+php8.3-gd php8.3-intl php8.3-mbstring php8.3-xml php8.3-soap \
+php8.3-zip php8.3-bcmath php8.3-opcache -y
+
+Create PHP-FPM Pool for test-ssh
+sudo cp /etc/php/8.3/fpm/pool.d/www.conf /etc/php/8.3/fpm/pool.d/test-ssh.conf
+
+
+Edit:
+
+[test-ssh]
+user = test-ssh
+group = clp
+listen = /run/php/php8.3-fpm-test-ssh.sock
+
+
+Restart:
+
+sudo systemctl restart php8.3-fpm
+
+Phase 4: Database & Search (Day 3)
+MySQL 8
+sudo apt install mysql-server -y
+
+
+Create DB:
+
+CREATE DATABASE magento;
+CREATE USER 'magento'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON magento.* TO 'magento'@'localhost';
+FLUSH PRIVILEGES;
+
+Elasticsearch
+
+Magento requires it.
+
+sudo apt install elasticsearch -y
+sudo systemctl enable elasticsearch
+sudo systemctl start elasticsearch
+
+Phase 5: Composer & Magento Installation (Day 4–5)
+Install Composer
+curl -sS https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+
+Download Magento
+cd /var/www
+composer create-project --repository-url=https://repo.magento.com/ \
+magento/project-community-edition magento2
+
+
+Set ownership:
+
+sudo chown -R test-ssh:clp /var/www/magento2
+
+Install Magento
+bin/magento setup:install \
+--base-url=https://test.mgt.com \
+--db-host=localhost \
+--db-name=magento \
+--db-user=magento \
+--db-password=password \
+--admin-firstname=Admin \
+--admin-lastname=User \
+--admin-email=admin@test.com \
+--admin-user=admin \
+--admin-password=Admin@123 \
+--language=en_US \
+--currency=USD \
+--timezone=Asia/Kolkata \
+--use-rewrites=1 \
+--search-engine=elasticsearch7 \
+--elasticsearch-host=localhost \
+--elasticsearch-port=9200
+
+
+Install sample data:
+
+bin/magento sampledata:deploy
+bin/magento setup:upgrade
+
+Phase 6: NGINX Virtual Host (Day 5)
+
+Create config:
+
+sudo nano /etc/nginx/sites-available/test.mgt.com
+
+
+Run NGINX as test-ssh
+
+Use PHP socket: php8.3-fpm-test-ssh.sock
+
+Enable site:
+
+sudo ln -s /etc/nginx/sites-available/test.mgt.com /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+
+
+Add to /etc/hosts (local machine):
+
+SERVER_IP test.mgt.com
+
+Phase 7: Redis Configuration (Day 6)
+sudo apt install redis-server -y
+
+
+Magento Redis config:
+
+bin/magento setup:config:set \
+--cache-backend=redis \
+--cache-backend-redis-server=127.0.0.1 \
+--cache-backend-redis-port=6379
+
+
+Session Redis:
+
+bin/magento setup:config:set \
+--session-save=redis \
+--session-save-redis-host=127.0.0.1 \
+--session-save-redis-port=6379
+
+Phase 8: PHPMyAdmin (Day 7)
+sudo apt install phpmyadmin -y
+
+
+Create NGINX site:
+
+pma.mgt.com
+
+
+Add to /etc/hosts:
+
+SERVER_IP pma.mgt.com
+
+Phase 9: HTTPS & Redirects (Day 8)
+
+Create self-signed SSL:
+
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+-keyout /etc/ssl/private/mgt.key \
+-out /etc/ssl/certs/mgt.crt
+
+
+Configure NGINX:
+
+HTTP → HTTPS redirect
+
+Magento base URLs HTTPS:
+
+bin/magento setup:store-config:set --base-url-secure=https://test.mgt.com
+bin/magento setup:store-config:set --use-secure=1
+
+Phase 10: Varnish (Day 9)
+sudo apt install varnish -y
+
+
+Magento Varnish:
+
+bin/magento config:set system/full_page_cache/caching_application 2
+bin/magento varnish:vcl:generate
+
+
+Restart all services.
+
+What to Submit (VERY IMPORTANT)
+
+Before emailing:
+
+✅ Test URLs:
+
+https://test.mgt.com
+
+https://pma.mgt.com
+
+✅ Take screenshots:
+
+Magento frontend
+
+Magento admin
+
+Redis running
+
+Varnish running
+
+NGINX + PHP-FPM pool
+
+SSL redirect working
+
+My Honest Advice (Based on Your Background)
+
+You should absolutely do this.
+This task alone can:
+
+Upgrade you from support → DevOps / Magento Infra
+
+Become your portfolio project
+
+Be mentioned in interviews as real production setup
+
+If you want, next I can:
+
+Give you NGINX Magento config
+
+Give you Varnish VCL
+
+Give you exact commands checklist
+
+Review before submission
+
+Draft the final submission email
+
+Just tell me 👍

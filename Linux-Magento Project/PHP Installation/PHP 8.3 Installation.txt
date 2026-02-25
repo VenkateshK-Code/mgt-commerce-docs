@@ -1,0 +1,35 @@
+PHP 8.3 Installation
+
+# Add the Sury PHP repository
+curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg
+echo "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
+
+# Update and Install PHP 8.3 with all Magento requirements
+apt update
+apt install -y php8.3 php8.3-fpm php8.3-cli php8.3-mysql php8.3-xsl php8.3-gd php8.3-intl php8.3-mbstring php8.3-curl php8.3-zip php8.3-bcmath php8.3-soap php8.3-sockets php8.3-opcache php8.3-simplexml php8.3-xml
+
+  
+#To check version
+php -v
+
+#Check FPM Service Status
+systemctl status php8.3-fpm
+
+Press q to exit status screen
+
+3. Verify Required Modules
+Magento needs specific extensions. Run this to list all installed modules:
+
+
+php -m
+
+
+
+
+# Add the PHP repository
+sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+sudo apt update
+
+# Install PHP 8.3 and required Magento extensions
+sudo apt install -y php8.3-fpm php8.3-common php8.3-mysql php8.3-gmp php8.3-curl php8.3-intl php8.3-mbstring php8.3-xmlrpc php8.3-gd php8.3-xml php8.3-cli php8.3-zip php8.3-bcmath php8.3-soap php8.3-intl php8.3-readline php8.3-sockets

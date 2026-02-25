@@ -1,0 +1,5 @@
+# Upload Repository Config
+scp /path/to/mysql-apt-config_0.8.33-1_all.deb admin@<SERVER_IP>:~
+
+# Upload Signature File (assuming it is named signature.asc)
+scp /C:\Users\venka\Downloads\mysql-server_8.0.44-1debian12_amd64.deb-bundle.tar.asc admin@18.61.156.247:~

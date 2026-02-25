@@ -1,0 +1,30 @@
+apt install -y redis-server varnish
+systemctl enable redis-server varnish
+systemctl start redis-server varnish
+
+4. Install Composer (Required for Step 3)
+Magento 2 must be installed via Composer.
+
+Bash
+
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+chmod +x /usr/local/bin/composer
+
+
+5. Create the Magento Database
+Log into MySQL to create the database for the store:
+
+Bash
+
+mysql -u root -p
+(Enter your root password, then run these SQL commands):
+
+SQL
+
+CREATE DATABASE magento_db;
+CREATE USER 'magento_user'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Mag3nto_Pass!123';
+GRANT ALL PRIVILEGES ON magento_db.* TO 'magento_user'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+

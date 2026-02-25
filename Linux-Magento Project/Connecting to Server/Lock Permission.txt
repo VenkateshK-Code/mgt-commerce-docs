@@ -1,0 +1,11 @@
+# Define the path variable for easier handling
+$KeyPath = "C:\Users\venka\OneDrive\Desktop\Linux-Magento Project\mgt-key.pem"
+
+# Reset permissions
+icacls $KeyPath /reset
+
+# Grant Read-Only access to your user account
+icacls $KeyPath /grant:r "$($env:USERNAME):(R)"
+
+# Remove inherited permissions (Secure the file)
+icacls $KeyPath /inheritance:r

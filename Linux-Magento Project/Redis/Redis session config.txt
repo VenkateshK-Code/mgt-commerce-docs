@@ -1,0 +1,42 @@
+# Default and Page Cache
+bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-server=127.0.0.1 --cache-backend-redis-db=0
+bin/magento setup:config:set --page-cache=redis --page-cache-redis-server=127.0.0.1 --page-cache-redis-db=1
+
+# Session Storage
+bin/magento setup:config:set --session-save=redis --session-save-redis-server=127.0.0.1 --session-save-redis-db=2
+
+
+Step 1: Fix the Redis Session Configuration
+Run these commands as the test-ssh user to finish your Redis requirement:
+
+Bash
+
+# Move to the correct folder
+cd /var/www/html/magento
+
+# Configure Redis for Sessions (Note: uses --session-save-redis-host)
+bin/magento setup:config:set --session-save=redis \
+--session-save-redis-host=127.0.0.1 \
+--session-save-redis-log-level=3 \
+--session-save-redis-db=2
+Step 2: Create the PHP-FPM Pool (Requirement #5)
+The assessment requires a PHP pool running as test-ssh:clp. Exit to root to create this:
+
+Create the file: nano /etc/php/8.3/fpm/pool.d/test-ssh.conf
+
+Paste this configuration:
+
+Ini, TOML
+
+[test-ssh]
+user = test-ssh
+group = clp
+listen = /run/php/php8.3-fpm-test-ssh.sock
+listen.owner = test-ssh
+listen.group = clp
+pm = dynamic
+pm.max_children = 10
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+Restart PHP: systemctl restart php8.3-fpm.
